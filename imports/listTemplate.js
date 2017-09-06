@@ -2,6 +2,22 @@ import { Template } from 'meteor/templating';
 import { Lists } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
+Template.list.helpers({
+	tasks() {
+		
+//		var taskArray = [];
+//		
+//		Lists.update(
+//			 { _id: this._id },
+//			 { $push: { tasks: taskArray } }
+//		)
+//		
+
+		
+    return Lists.findOne(this._id)["tasks"];;
+  },
+});
+
 Template.list.events({
 	'click .delete'(event) {
 		event.stopImmediatePropagation();

@@ -90,13 +90,18 @@ Template.body.events({
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
- 
+ 		var taskArray = [
+			{ text: 'This is task 1' },
+			{ text: 'This is task 2' },
+			{ text: 'This is task 3' },
+  	];
     // Insert a task into the collection
     Lists.insert({
       text,
       createdAt: new Date(),
 			expanded: false,
-			pos: { "x": 15, "y": 100}
+			pos: { "x": 15, "y": 100},
+			tasks: taskArray,
     });
  
     // Clear form
