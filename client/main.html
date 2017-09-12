@@ -40,9 +40,20 @@
 			<br><br>
 			
 			<form class="new-task">
-				<input type="text" name="text"/> <button type="submit" class="btn btn-default btn-sm">
-						<span class="glyphicon glyphicon-plus"></span> New task
-					</button>
+				&nbsp;Name:
+				<input type="text" name="text"/> 
+				Due Date:
+  			<input type="date" name="due">
+				Priority:
+				<input type="radio" name="priority" value="1" checked>Low
+  			<input type="radio" name="priority" value="2">Mid
+  			<input type="radio" name="priority" value="3">High
+				<br>
+				&nbsp;Notes: <input type="text" name="text" size="70"/>
+				<input class="btn btn-default btn-sm" type="reset">
+				<button type="submit" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-plus"></span> New task 
+				</button> 
    		</form>
 			
 			 <ul>
@@ -53,6 +64,7 @@
 			
 				<p>
 					<div class="delete btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-trash"></span></div>
+					<div class="delete btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-user"></span></div>
 				</p>
 			{{/if}}
 </div>
