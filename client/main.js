@@ -77,7 +77,9 @@ Accounts.ui.config({
 
 Template.body.helpers({
 	lists() {
-    return Lists.find({});
+    //return Lists.find({});
+		
+		return Lists.find( { owners: Meteor.userId() } )
   },
 });
 
@@ -86,6 +88,9 @@ Template.body.events({
   'submit .new-list'(event) {
     // Prevent default browser form submit
     event.preventDefault();
+		
+		console.log(Meteor.userId());
+		var ownersArray = [ Meteor.userId() ];
  
     // Get value from form element
     const target = event.target;
@@ -102,6 +107,7 @@ Template.body.events({
 			expanded: false,
 			pos: { "x": 15, "y": 100},
 			tasks: taskArray,
+			owners: ownersArray,
     });
  
     // Clear form

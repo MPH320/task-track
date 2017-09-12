@@ -22,6 +22,7 @@ Template.list.events({
 	'click .delete'(event) {
 		event.stopImmediatePropagation();
     Lists.remove(this._id);
+		console.log("c");
   },
   'click .expand-list'(event) {
     // Set the checked property to the opposite of its current value
@@ -32,13 +33,16 @@ Template.list.events({
       $set: { expanded: ! this.expanded },
     });
 		
-		
+		console.log("b");
   },
 	'click .single-list'() {
 		
-		pos = Session.get( "currentListPos" )
+		if (!Session.get( "currentListPos" )){
+			return
+		}
 		
-		//console.log(pos);
+		pos = Session.get( "currentListPos" )
+
 		
 //		console.log(pos["x"]);
 //		console.log(pos["y"]);
@@ -47,11 +51,37 @@ Template.list.events({
 			Lists.update(this._id, {
       	$set: { pos: pos },
     	});
-	
-		
-		
-		
+
     // Set the checked property to the opposite of its current value
 
+  },
+	'submit .new-task'(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
+		console.log("Adding task");
+//		
+//		console.log(Meteor.userId());
+//		var ownersArray = [ Meteor.userId() ];
+// 
+//    // Get value from form element
+//    const target = event.target;
+//    const text = target.text.value;
+// 		var taskArray = [
+//			{ text: 'This is task 1' },
+//			{ text: 'This is task 2' },
+//			{ text: 'This is task 3' },
+//  	];
+//    // Insert a task into the collection
+//    Lists.insert({
+//      text,
+//      createdAt: new Date(),
+//			expanded: false,
+//			pos: { "x": 15, "y": 100},
+//			tasks: taskArray,
+//			owners: ownersArray,
+//    });
+// 
+//    // Clear form
+//    target.text.value = '';
   },
 });
