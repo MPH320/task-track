@@ -89,20 +89,16 @@ Template.body.events({
     // Prevent default browser form submit
     event.preventDefault();
 		
-		console.log(Meteor.userId());
+		//console.log(Meteor.userId());
 		var ownersArray = [ Meteor.userId() ];
  
     // Get value from form element
     const target = event.target;
-    const text = target.text.value;
- 		var taskArray = [
-			{ text: 'This is task 1' },
-			{ text: 'This is task 2' },
-			{ text: 'This is task 3' },
-  	];
+    const name = target.name.value;
+ 		var taskArray = [];
     // Insert a task into the collection
     Lists.insert({
-      text,
+      name,
       createdAt: new Date(),
 			expanded: false,
 			pos: { "x": 15, "y": 100},
@@ -111,6 +107,6 @@ Template.body.events({
     });
  
     // Clear form
-    target.text.value = '';
+    target.name.value = '';
   },
 });

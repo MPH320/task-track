@@ -22,7 +22,7 @@ Template.list.events({
 	'click .delete'(event) {
 		event.stopImmediatePropagation();
     Lists.remove(this._id);
-		console.log("c");
+
   },
   'click .expand-list'(event) {
     // Set the checked property to the opposite of its current value
@@ -33,7 +33,7 @@ Template.list.events({
       $set: { expanded: ! this.expanded },
     });
 		
-		console.log("b");
+
   },
 	'click .single-list'() {
 		
@@ -58,8 +58,23 @@ Template.list.events({
 	'submit .new-task'(event) {
     // Prevent default browser form submit
     event.preventDefault();
-		console.log("Adding task");
-//		
+		target = event.target;
+		name = target.name.value;
+		due = target.due.value;
+		priority = target.priority.value;
+		notes = target.notes.value;
+		
+		task = { name: name, due: due, priority: priority, notes: notes };
+		
+		Lists.update(this._id, {
+      	$push: { tasks: task },
+    });
+		
+		target.name.value = '';
+		target.due.value = '';
+		target.notes.value = '';
+		target.priority.value = '';
+		
 //		console.log(Meteor.userId());
 //		var ownersArray = [ Meteor.userId() ];
 // 
