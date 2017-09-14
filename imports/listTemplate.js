@@ -1,20 +1,17 @@
 import { Template } from 'meteor/templating';
 import { Lists } from '../imports/collections.js';
+import { Tasks } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
 Template.list.helpers({
 	tasks() {
 		
-//		var taskArray = [];
-//		
-//		Lists.update(
-//			 { _id: this._id },
-//			 { $push: { tasks: taskArray } }
-//		)
-//		
+		//console.log(this._id)
+		
+		return Tasks.find({ list: this._id })
 
 		
-    return Lists.findOne(this._id)["tasks"];;
+    //return Lists.findOne(this._id)["tasks"];
   },
 });
 
@@ -35,15 +32,26 @@ Template.list.events({
 		
 
   },
+	'mousedown .draggable'(event) {
+		
+//		console.log("set list id");
+//		console.log(this._id);
+		Session.set( "currentList", this._id );
+		event.stopImmediatePropagation();
+
+  },
 	'click .single-list'() {
 		
 		if (!Session.get( "currentListPos" )){
 			return
 		}
 		
-		pos = Session.get( "currentListPos" )
-
+		if(this._id == Session.get( "currentList" )){
+			pos = Session.get( "currentListPos" );
+		}
 		
+
+		//".draggable"
 //		console.log(pos["x"]);
 //		console.log(pos["y"]);
 		
@@ -66,20 +74,31 @@ Template.list.events({
 		newid = new Mongo.ObjectID();
     // Set the checked property to the opposite of its current value
 		
-		task = { name: name, due: due, priority: priority, notes: notes, completed: false, id: newid._str };
+		//task = { name: name, due: due, priority: priority, notes: notes, completed: false, id: newid._str };
 		
+		task = { name: name, due: due, priority: priority, notes: notes, completed: false, list: this._id };
+		
+		
+		console.log(this._id);
 		
 		//taskid = { newid._str: task}
 		
-		
-		
-		
-		
-		
-		
-		Lists.update(this._id, {
-      	$push: { tasks: task },
+//		
+		Tasks.insert({
+      name,
+      due: due,
+			priority: priority,
+			notes: notes,
+			completed: false,
+			list: this._id,// current time
     });
+		
+		
+		
+		
+//		Lists.update(this._id, {
+//      	$push: { tasks: task },
+//    });
 		
 		target.name.value = '';
 		target.due.value = '';

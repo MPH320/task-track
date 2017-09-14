@@ -1,4 +1,5 @@
 import { Lists } from '../imports/collections.js';
+import { Tasks } from '../imports/collections.js';
 import '../imports/listTemplate.js';
 
 var currentIndex = 0;
@@ -17,6 +18,9 @@ Template.list.onRendered(function () {
 			
 			
 	var moveDiv = this.find('.single-list');
+	var listID = this.data._id;
+	//console.log(this.data._id)
+
 	
 	if(this.data.pos){
 		pos = this.data.pos;
@@ -36,8 +40,7 @@ onmousemove = function(e){
 		toDrag.offset({left:e.clientX, top:e.clientY})
 		
 		Session.set( "currentListPos", { "x": e.clientX, "y": e.clientY} );
-
-
+			
 	}
 
 }
@@ -46,15 +49,6 @@ $( "body" ).mouseup(function() {
   if(dragging) {
 		
 		dragging = !dragging;
-		
-
-		
-
-	
-//    Tasks.update(this._id, {
-//      $set: { checked: ! this.checked },
-//    });
-
 		
 		
 	} 
@@ -68,7 +62,9 @@ $( "body" ).mouseup(function() {
 			//console.log($(this).offset());
     	if(!dragging) dragging = !dragging;
 			toDrag = $(this).parent()
+		
 			//console.log(toDrag);
+			
   });
 	
 	
@@ -118,24 +114,10 @@ Template.body.events({
 
 Template.task.events({
   'click .toggle-checked'() {
-		//this.completed = !this.completed;
-		
-		newval = !this.completed;
-		
-		console.log(this.id)
-		console.log(Template.parentData()._id);
-		
-		Lists.update(
-  		{ _id: Template.parentData()._id, "tasks.id": this.id}, 
-  		{$set: { "tasks.completed": newval }}
-		);
-		
-		//newid = new Mongo.ObjectID();
-    // Set the checked property to the opposite of its current value
-		//console.log(newid._str);
-//    Tasks.update(this._id, {
-//      $set: { checked: ! this.checked },
-//    });
+
+    Tasks.update(this._id, {
+      $set: { completed: ! this.completed },
+    });
   },
   'click .delete'() {
     Tasks.remove(this._id);
@@ -147,17 +129,3 @@ Template.task.helpers({
 		return this.completed;
   }
 });
-
-//Template.myItem.helpers({
-//  listIndex: function() {
-//    return currentIndex += 1;
-//  }
-//});
-
-//Template.task.helpers({
-//	someHelper() {
-//    //return Lists.find({});
-//		
-//		console.log("i'm helping");
-//  },
-//});
