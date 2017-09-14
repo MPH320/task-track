@@ -1,6 +1,10 @@
 import { Lists } from '../imports/collections.js';
 import '../imports/listTemplate.js';
 
+var currentIndex = 0;
+
+
+
 Template.list.onRendered(function () {
 	
 	var toDrag;
@@ -75,6 +79,7 @@ Accounts.ui.config({
 });
 
 
+
 Template.body.helpers({
 	lists() {
     //return Lists.find({});
@@ -110,3 +115,49 @@ Template.body.events({
     target.name.value = '';
   },
 });
+
+Template.task.events({
+  'click .toggle-checked'() {
+		//this.completed = !this.completed;
+		
+		newval = !this.completed;
+		
+		console.log(this.id)
+		console.log(Template.parentData()._id);
+		
+		Lists.update(
+  		{ _id: Template.parentData()._id, "tasks.id": this.id}, 
+  		{$set: { "tasks.completed": newval }}
+		);
+		
+		//newid = new Mongo.ObjectID();
+    // Set the checked property to the opposite of its current value
+		//console.log(newid._str);
+//    Tasks.update(this._id, {
+//      $set: { checked: ! this.checked },
+//    });
+  },
+  'click .delete'() {
+    Tasks.remove(this._id);
+  },
+});
+
+Template.task.helpers({
+	isCompleted() {
+		return this.completed;
+  }
+});
+
+//Template.myItem.helpers({
+//  listIndex: function() {
+//    return currentIndex += 1;
+//  }
+//});
+
+//Template.task.helpers({
+//	someHelper() {
+//    //return Lists.find({});
+//		
+//		console.log("i'm helping");
+//  },
+//});

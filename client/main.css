@@ -12,6 +12,7 @@
 	width: 50vw;
 }
 
-.caret {
-	z-index: 1;
+.checked {
+  color: #888;
+	text-decoration: line-through;
 }

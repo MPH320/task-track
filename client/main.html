@@ -49,7 +49,7 @@
   			<input type="radio" name="priority" value="2">Mid
   			<input type="radio" name="priority" value="3">High
 				<br>
-				&nbsp;Notes: <input type="text" name="notes" size="70"/>
+				&nbsp;Notes: <input type="text" name="notes" size="45"/>
 				<input class="btn btn-default btn-sm" type="reset">
 				<button type="submit" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-plus"></span> New task 
@@ -57,8 +57,11 @@
    		</form>
 			
 			 <ul>
+				 
 				{{#each tasks}}
+				 <br>
 					{{> task}}
+				 <br>
 				{{/each}}
 			</ul>
 			
@@ -74,7 +77,12 @@
 </template>
 
 <template name="task">
-  <li>{{name}} {{due}} {{priority}} {{notes}}</li>
+
+	<div class="{{#if isCompleted}}checked{{/if}}">
+		<input type="checkbox"  checked="{{checked}}" class="toggle-checked" /> {{name}} - {{priority}} <br> 
+		Due on: {{due}} <br> 
+		{{notes}}  <div class="delete btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></div>
+	</div>
 </template>
 
 <template name="listForm">

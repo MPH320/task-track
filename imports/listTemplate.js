@@ -63,8 +63,19 @@ Template.list.events({
 		due = target.due.value;
 		priority = target.priority.value;
 		notes = target.notes.value;
+		newid = new Mongo.ObjectID();
+    // Set the checked property to the opposite of its current value
 		
-		task = { name: name, due: due, priority: priority, notes: notes };
+		task = { name: name, due: due, priority: priority, notes: notes, completed: false, id: newid._str };
+		
+		
+		//taskid = { newid._str: task}
+		
+		
+		
+		
+		
+		
 		
 		Lists.update(this._id, {
       	$push: { tasks: task },
