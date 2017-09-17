@@ -13,7 +13,15 @@ Template.list.helpers({
 		
     //return Lists.findOne(this._id)["tasks"];
   },
+	addMember() {
+
+		if (this._id == Session.get("currentListToAdd")){
+			return true;
+		} else {return false}
+		
+  },
 });
+
 
 Template.list.events({
 	'click .delete'(event) {
@@ -21,6 +29,10 @@ Template.list.events({
     Lists.remove(this._id);
 
   },
+	'click .add'(event){
+		event.stopImmediatePropagation();
+		Session.set( "currentListToAdd", this._id );
+	},
   'click .expand-list'(event) {
     // Set the checked property to the opposite of its current value
 		event.stopImmediatePropagation();

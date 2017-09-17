@@ -1,5 +1,7 @@
 <head>
   <title>task-track</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	
 </head>
 
 <body>
@@ -65,8 +67,20 @@
 			</ul>
 			
 				<p>
+					
+					{{#if addMember}}
+					
+						<form class="new-member">
+							&nbsp;task-track username or facebook login email:
+							<input type="text" name="name"/> 
+							<button type="submit" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-plus"></span> Add member
+							</button> 
+						</form>
+					{{/if}}
+			
 					<div class="delete btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-trash"></span></div>
-					<div class="delete btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-user"></span></div>
+					<div class="add btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-user"></span></div>
 				</p>
 			{{/if}}
 </div>
@@ -79,7 +93,7 @@
 
 	<div class="{{#if isCompleted}}checked{{/if}}">
 		<input type="checkbox"  checked="{{checked}}" class="toggle-checked" /> {{name}} - {{priority}} <br> 
-		Due on: {{due}} <br> 
+		{{dueOn}} <br> 
 		{{notes}}  <div class="delete btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></div>
 	</div>
 </template>

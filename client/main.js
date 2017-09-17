@@ -127,5 +127,9 @@ Template.task.events({
 Template.task.helpers({
 	isCompleted() {
 		return this.completed;
+  },
+	dueOn() {
+		var dayWrapper = moment(this.due);
+		return "Due " + dayWrapper.fromNow();
   }
 });
