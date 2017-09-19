@@ -14,8 +14,8 @@ Template.list.helpers({
     //return Lists.findOne(this._id)["tasks"];
   },
 	addMember() {
-
-		if (this._id == Session.get("currentListToAdd")){
+		
+		if (this._id == Session.get("currentListToAdd") && Session.get( "addingMember")){
 			return true;
 		} else {return false}
 		
@@ -31,7 +31,21 @@ Template.list.events({
   },
 	'click .add'(event){
 		event.stopImmediatePropagation();
-		Session.set( "currentListToAdd", this._id );
+		
+		//add member button has been clicked and then it was clicked on a different list	
+		if (Session.get( "addingMember") && this._id != Session.get("currentListToAdd") ) { 
+				Session.set( "addingMember", true );
+		} else {
+		//page loaded and add member button is unclicked	
+				if(Session.get( "addingMember")){
+				Session.set( "addingMember", !Session.get( "addingMember") );
+			} else {
+				Session.set( "addingMember", true );
+			}
+			
+		}
+
+			Session.set( "currentListToAdd", this._id );
 	},
   'click .expand-list'(event) {
     // Set the checked property to the opposite of its current value
@@ -84,18 +98,13 @@ Template.list.events({
 		priority = target.priority.value;
 		notes = target.notes.value;
 		newid = new Mongo.ObjectID();
-    // Set the checked property to the opposite of its current value
-		
-		//task = { name: name, due: due, priority: priority, notes: notes, completed: false, id: newid._str };
+
 		
 		task = { name: name, due: due, priority: priority, notes: notes, completed: false, list: this._id };
 		
 		
 		console.log(this._id);
-		
-		//taskid = { newid._str: task}
-		
-//		
+
 		Tasks.insert({
       name,
       due: due,
@@ -104,41 +113,23 @@ Template.list.events({
 			completed: false,
 			list: this._id,// current time
     });
-		
-		
-		
-		
-//		Lists.update(this._id, {
-//      	$push: { tasks: task },
-//    });
+
 		
 		target.name.value = '';
 		target.due.value = '';
 		target.notes.value = '';
 		target.priority.value = '';
 		
-//		console.log(Meteor.userId());
-//		var ownersArray = [ Meteor.userId() ];
-// 
-//    // Get value from form element
-//    const target = event.target;
-//    const text = target.text.value;
-// 		var taskArray = [
-//			{ text: 'This is task 1' },
-//			{ text: 'This is task 2' },
-//			{ text: 'This is task 3' },
-//  	];
-//    // Insert a task into the collection
-//    Lists.insert({
-//      text,
-//      createdAt: new Date(),
-//			expanded: false,
-//			pos: { "x": 15, "y": 100},
-//			tasks: taskArray,
-//			owners: ownersArray,
-//    });
-// 
-//    // Clear form
-//    target.text.value = '';
+
+  },
+	'submit .new-member'(event) {
+   	event.preventDefault();
+		target = event.target;
+		name = target.name.value;
+	
+		console.log(name)
+		Lists.update({ _id: this._id },{ $push: { owners: name }})
+		
+		Session.set( "addingMember", false );
   },
 });

@@ -78,10 +78,18 @@ Accounts.ui.config({
 
 Template.body.helpers({
 	lists() {
-    //return Lists.find({});
-		
-		return Lists.find( { owners: Meteor.userId() } )
-  },
+   
+		if (Meteor.user()) 
+		{
+			
+			if(Meteor.user().profile){
+				return Lists.find( { owners: Meteor.user().profile.name } );
+			} else {
+				return Lists.find( { owners: Meteor.user().username } );
+			}
+		} else { return Lists.find( { owners: "public" } ) }
+
+	},
 });
 
 
@@ -90,8 +98,17 @@ Template.body.events({
     // Prevent default browser form submit
     event.preventDefault();
 		
+		var ownersArray = [];
 		//console.log(Meteor.userId());
-		var ownersArray = [ Meteor.userId() ];
+		if (!Meteor.user()) 
+		{
+			ownersArray = ["public"];
+		} else if(Meteor.user().profile){
+			ownersArray = [Meteor.user().profile.name];
+		} else {
+			ownersArray = [Meteor.user().username];
+		}
+		
  
     // Get value from form element
     const target = event.target;
