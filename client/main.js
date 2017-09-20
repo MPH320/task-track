@@ -1,5 +1,6 @@
 import { Lists } from '../imports/collections.js';
 import { Tasks } from '../imports/collections.js';
+import { Positions } from '../imports/collections.js';
 import '../imports/listTemplate.js';
 
 var currentIndex = 0;
@@ -11,24 +12,32 @@ Template.list.onRendered(function () {
 	var toDrag;
 	
 	dragging = false;
-	var offsetVal = 0;
-	var inc = 100;
-	
-	offsetVal+=inc;
+//	var offsetVal = 0;
+//	var inc = 100;
+//	
+//	offsetVal+=inc;
 			
 			
 	var moveDiv = this.find('.single-list');
 	var listID = this.data._id;
 	//console.log(this.data._id)
-
 	
-	if(this.data.pos){
-		pos = this.data.pos;
-		//console.log(pos);
-		moveDiv = $(moveDiv);
-		moveDiv.offset({left:pos["x"], top:pos["y"]})
-		
+	var posId; 
+
+	if (!Meteor.user()) 
+	{
+		posId = Positions.findOne({list: listID, owner: "public" });
+	} else{
+		posId = Positions.findOne({list: listID, owner: Meteor.userId() });
 	}
+	
+	moveDiv = $(moveDiv);
+	
+
+	if(posId){
+		pos = posId.pos;
+		moveDiv.offset({left:pos["x"], top:pos["y"]})
+	} 
 
 	
 	
@@ -100,29 +109,45 @@ Template.body.events({
 		
 		var ownersArray = [];
 		//console.log(Meteor.userId());
+		
+		var theId = Meteor.userId();
+		
 		if (!Meteor.user()) 
 		{
 			ownersArray = ["public"];
+			theId = "public";
+			
 		} else if(Meteor.user().profile){
 			ownersArray = [Meteor.user().profile.name];
 		} else {
 			ownersArray = [Meteor.user().username];
 		}
 		
- 
+ 		var divPos = { "x": 15, "y": 100};
     // Get value from form element
     const target = event.target;
     const name = target.name.value;
  		var taskArray = [];
     // Insert a task into the collection
-    Lists.insert({
+   	var newId = Lists.insert({
       name,
       createdAt: new Date(),
 			expanded: false,
-			pos: { "x": 15, "y": 100},
 			tasks: taskArray,
 			owners: ownersArray,
     });
+		
+		if (!Meteor.user()) 
+		{
+			theId = "public";
+		} 
+		
+		Positions.insert({ list: newId, owner: theId, pos: divPos });
+	
+		//Meteor.users.update(userId, {$set: {newId: divPos});
+
+//		var url = 'http://example.com/kittens.jpg';
+//		Meteor.users.update(userId, {$set: {'profile.photo': url});
  
     // Clear form
     target.name.value = '';

@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Lists } from '../imports/collections.js';
 import { Tasks } from '../imports/collections.js';
+import { Positions } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
 Template.list.helpers({
@@ -8,7 +9,7 @@ Template.list.helpers({
 		
 		//console.log(this._id)
 		
-		return Tasks.find({ list: this._id })
+		return Tasks.find({ list: this._id }, { sort: { priority: -1 } })
 
 		
     //return Lists.findOne(this._id)["tasks"];
@@ -85,6 +86,32 @@ Template.list.events({
 			Lists.update(this._id, {
       	$set: { pos: pos },
     	});
+		
+		var posId; 
+		var theId;
+		
+		if (!Meteor.user()) 
+		{
+			theId = "public"
+			posId = Positions.findOne({list: this._id, owner: theId });
+		} else{
+			theId = Meteor.userId()
+			posId = Positions.findOne({list: this._id, owner: theId });
+		}
+		
+		//console.log(posId);
+		
+		if (posId){
+			Positions.update(posId._id, {
+      	$set: { pos: pos },
+    	});
+		} else{
+			Positions.insert({ list: this._id, owner: theId, pos: pos });
+		}
+		
+			
+		
+
 
     // Set the checked property to the opposite of its current value
 
@@ -100,7 +127,7 @@ Template.list.events({
 		newid = new Mongo.ObjectID();
 
 		
-		task = { name: name, due: due, priority: priority, notes: notes, completed: false, list: this._id };
+		//task = { name: name, due: due, priority: priority, notes: notes, completed: false, list: this._id };
 		
 		
 		console.log(this._id);
