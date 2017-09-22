@@ -142,7 +142,7 @@ Template.body.events({
 			theId = "public";
 		} 
 		
-		Positions.insert({ list: newId, owner: theId, pos: divPos });
+		Positions.insert({ list: newId, owner: theId, pos: divPos, expanded: false });
 	
 		//Meteor.users.update(userId, {$set: {newId: divPos});
 

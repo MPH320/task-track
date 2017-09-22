@@ -21,6 +21,22 @@ Template.list.helpers({
 		} else {return false}
 		
   },
+	isExpanded(){
+		
+		if (!Meteor.user()) 
+		{
+			posId = Positions.findOne({list: this._id, owner: "public" });
+		} else{
+			posId = Positions.findOne({list: this._id, owner: Meteor.userId() });
+		}
+
+		
+		if (posId){
+
+			return posId.expanded;
+		}
+	
+	},
 });
 
 
@@ -51,11 +67,28 @@ Template.list.events({
   'click .expand-list'(event) {
     // Set the checked property to the opposite of its current value
 		event.stopImmediatePropagation();
-		//console.log(this.expanded);
-	
-    Lists.update(this._id, {
-      $set: { expanded: ! this.expanded },
-    });
+
+		var theId;
+		
+		if (!Meteor.user()) 
+		{
+			posId = Positions.findOne({list: this._id, owner: "public" });
+			theId = "public";
+		} else{
+			posId = Positions.findOne({list: this._id, owner: Meteor.userId() });
+			theId = Meteor.userId();
+		}
+		
+		if (posId){
+			Positions.update(posId._id, {
+				$set: { expanded: ! posId.expanded },
+			});
+		} else{
+			Positions.insert({ list: this._id, owner: theId, expanded: true });
+		}
+
+		
+		
 		
 
   },
@@ -130,7 +163,7 @@ Template.list.events({
 		//task = { name: name, due: due, priority: priority, notes: notes, completed: false, list: this._id };
 		
 		
-		console.log(this._id);
+//		console.log(this._id);
 
 		Tasks.insert({
       name,
@@ -154,7 +187,7 @@ Template.list.events({
 		target = event.target;
 		name = target.name.value;
 	
-		console.log(name)
+
 		Lists.update({ _id: this._id },{ $push: { owners: name }})
 		
 		Session.set( "addingMember", false );
