@@ -4,7 +4,7 @@ import { Tasks } from '../imports/collections.js';
 import { Positions } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
-var count = 0;
+//var count = 0;
 
 Template.list.helpers({
 	tasks() {
@@ -165,8 +165,8 @@ Template.list.events({
       	$set: { pos: pos },
     	});
 			
-			$(".test").html("<p> updated "+count+"</p>");
-			count++;
+//			$(".test").html("<p> updated "+count+"</p>");
+//			count++;
 //			console.log(posId);
 			
 		} else{
