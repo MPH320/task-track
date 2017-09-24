@@ -55,8 +55,8 @@ onmousemove = function(e){
 }
 
 $( "body" ).bind('mouseup touchend', function() {
-	console.log("end");
-	alert("end");
+//	console.log("end");
+//	alert("end");
   if(dragging) {
 		
 		dragging = !dragging;
@@ -69,8 +69,8 @@ $( "body" ).bind('mouseup touchend', function() {
   	$( ".draggable" )
 
   .bind('mousedown touchstart', function() {
-			console.log("start");
-			alert("start");
+//			console.log("start");
+//			alert("start");
 			//console.log($(this).offset());
     	if(!dragging) dragging = !dragging;
 			toDrag = $(this).parent()
