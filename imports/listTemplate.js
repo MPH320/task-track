@@ -43,6 +43,24 @@ Template.list.helpers({
 Template.list.events({
 	'click .delete'(event) {
 		event.stopImmediatePropagation();
+		
+		
+		var posToDel = Positions.find({ list: this._id }).fetch();
+		
+//		console.log(posToDel);
+		
+		if(posToDel){
+			
+			for(var i = 0; i < posToDel.length; i++){
+//				console.log(i);
+//				console.log(posToDel[i]._id);
+				Positions.remove(posToDel[i]._id);
+			}
+			
+		}
+		
+		
+		
     Lists.remove(this._id);
 
   },
