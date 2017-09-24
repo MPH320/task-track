@@ -71,7 +71,7 @@ $( "body" ).bind('mouseup touchend', function() {
   if(dragging) {
 		
 		dragging = !dragging;
-		
+		toDrag.css("color", "black");
 		
 	} 
 });
@@ -83,11 +83,14 @@ $( "body" ).bind('mouseup touchend', function() {
 //			console.log("start");
 //			alert("start");
 			//console.log($(this).offset());
+			
+			//$(".draggable").css("color", "gray");
+			
     	if(!dragging) dragging = !dragging;
 			toDrag = $(this).parent()
 		
-			//console.log(toDrag);
-			
+//			console.log(toDrag);
+			toDrag.css("color", "gray");
   });
 	
 	
