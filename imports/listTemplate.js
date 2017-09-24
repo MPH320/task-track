@@ -4,6 +4,8 @@ import { Tasks } from '../imports/collections.js';
 import { Positions } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
+var count = 0;
+
 Template.list.helpers({
 	tasks() {
 		
@@ -111,6 +113,9 @@ Template.list.events({
 
   },
 	'mousedown, touchstart .draggable'(event) {
+		
+		$(".test").html("<p> hi "+count+"</p>");
+		count++;
 		
 //		console.log("set list id");
 //		console.log(this._id);
