@@ -39,6 +39,17 @@ Template.list.onRendered(function () {
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
 	} 
 
+	$("body").on("touchmove", function(e) {
+    
+		if(dragging){
+
+			toDrag.offset({left:e.clientX, top:e.clientY})
+
+			Session.set( "currentListPos", { "x": e.clientX, "y": e.clientY} );
+
+		}
+		
+	});
 	
 	
 onmousemove = function(e){
