@@ -43,11 +43,13 @@ Template.list.onRendered(function () {
 
 	$("body").on("touchmove", function(e) {
 		
-		alert(count)
 		
-		count++;
     
 		if(dragging){
+			
+			alert(count);
+			alert(e.clientX);
+			count++;
 
 			toDrag.offset({left:e.clientX, top:e.clientY})
 
