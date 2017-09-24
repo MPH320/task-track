@@ -43,10 +43,10 @@ Template.list.onRendered(function () {
 
 	$("body").on("touchmove", function(e) {
 		
-		
+		$(".test").html("<p>"+e.touches[0].clientX+"</p>");
     
 		if(dragging){
-			
+			$(".test").html("<p> hi "+e.touches[0].clientX+"</p>");
 			alert(count);
 			alert(e.touches[0].clientX);
 			count++;
@@ -61,6 +61,7 @@ Template.list.onRendered(function () {
 	
 	
 onmousemove = function(e){
+	
 	
 	
 	if(dragging){
