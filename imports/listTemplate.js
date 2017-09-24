@@ -123,7 +123,7 @@ Template.list.events({
 		event.stopImmediatePropagation();
 
   },
-	'click .single-list'() {
+	'click, touchend .single-list'() {
 		
 //		console.log("hey")
 		
