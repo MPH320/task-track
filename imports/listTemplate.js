@@ -114,8 +114,8 @@ Template.list.events({
   },
 	'mousedown, touchstart .draggable'(event) {
 		
-		$(".test").html("<p> hi "+count+"</p>");
-		count++;
+//		$(".test").html("<p> hi "+count+"</p>");
+//		count++;
 		
 //		console.log("set list id");
 //		console.log(this._id);
@@ -124,6 +124,8 @@ Template.list.events({
 
   },
 	'click .single-list'() {
+		
+//		console.log("hey")
 		
 		if (!Session.get( "currentListPos" )){
 			return
@@ -150,6 +152,7 @@ Template.list.events({
 		{
 			theId = "public"
 			posId = Positions.findOne({list: this._id, owner: theId });
+//			console.log(posId);
 		} else{
 			theId = Meteor.userId()
 			posId = Positions.findOne({list: this._id, owner: theId });
@@ -161,6 +164,11 @@ Template.list.events({
 			Positions.update(posId._id, {
       	$set: { pos: pos },
     	});
+			
+			$(".test").html("<p> updated "+count+"</p>");
+			count++;
+//			console.log(posId);
+			
 		} else{
 			Positions.insert({ list: this._id, owner: theId, pos: pos });
 		}
