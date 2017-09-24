@@ -12,21 +12,16 @@ Template.list.onRendered(function () {
 	var toDrag;
 	
 	dragging = false;
-//	var offsetVal = 0;
-//	var inc = 100;
-//	
-//	offsetVal+=inc;
-			
 			
 	var moveDiv = this.find('.single-list');
 	var listID = this.data._id;
-	//console.log(this.data._id)
 	
 	var posId; 
 
 	if (!Meteor.user()) 
 	{
 		posId = Positions.findOne({list: listID, owner: "public" });
+		
 	} else{
 		posId = Positions.findOne({list: listID, owner: Meteor.userId() });
 	}
@@ -35,9 +30,14 @@ Template.list.onRendered(function () {
 	
 
 	if(posId){
+		
 		pos = posId.pos;
+		console.log(pos.x);
+		console.log(pos.y);
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
-	} 
+	} else {
+		console.log("undefined");
+	}
 	
 //	var count = 0;
 
@@ -45,11 +45,11 @@ Template.list.onRendered(function () {
 		
 		var touch = e.originalEvent.touches[0];
 		
-		$(".test").html("<p>"+touch.pageX+"</p>");
+//		$(".test").html("<p>"+touch.pageX+"</p>");
 //		alert(touch);
     
 		if(dragging){
-			$(".test").html("<p> hi "+touch.pageX+"</p>");
+//			$(".test").html("<p> hi "+touch.pageX+"</p>");
 //			alert(count);
 //			alert(touch.clientX);
 //			count++;
@@ -173,12 +173,6 @@ Template.body.events({
 		
 		Positions.insert({ list: newId, owner: theId, pos: divPos, expanded: false });
 	
-		//Meteor.users.update(userId, {$set: {newId: divPos});
-
-//		var url = 'http://example.com/kittens.jpg';
-//		Meteor.users.update(userId, {$set: {'profile.photo': url});
- 
-    // Clear form
     target.name.value = '';
   },
 });

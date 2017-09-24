@@ -134,9 +134,9 @@ Template.list.events({
 //		console.log(pos["y"]);
 		
 		
-			Lists.update(this._id, {
-      	$set: { pos: pos },
-    	});
+//			Lists.update(this._id, {
+//      	$set: { pos: pos },
+//    	});
 		
 		var posId; 
 		var theId;
