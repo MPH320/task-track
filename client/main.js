@@ -43,17 +43,19 @@ Template.list.onRendered(function () {
 
 	$("body").on("touchmove", function(e) {
 		
-		$(".test").html("<p>"+e.touches[0].clientX+"</p>");
+		var touch = e.touches[0].screenX;
+		
+		$(".test").html("<p>"+touch.clientX+"</p>");
     
 		if(dragging){
-			$(".test").html("<p> hi "+e.touches[0].clientX+"</p>");
+			$(".test").html("<p> hi "+touch.clientX+"</p>");
 			alert(count);
-			alert(e.touches[0].clientX);
+			alert(touch.clientX);
 			count++;
 
-			toDrag.offset({left:e.touches[0].clientX, top:e.touches[0].clientY})
+			toDrag.offset({left:touch.clientX, top:touch.clientY})
 
-			Session.set( "currentListPos", { "x": e.touches[0].clientX, "y": e.touches[0].clientY} );
+			Session.set( "currentListPos", { "x": touch.clientX, "y": touch.clientY} );
 
 		}
 		
