@@ -110,7 +110,7 @@ Template.list.events({
 		
 
   },
-	'mousedown .draggable'(event) {
+	'mousedown, touchstart .draggable'(event) {
 		
 //		console.log("set list id");
 //		console.log(this._id);

@@ -35,8 +35,6 @@ Template.list.onRendered(function () {
 		console.log(pos.x);
 		console.log(pos.y);
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
-	} else {
-		console.log("undefined");
 	}
 	
 //	var count = 0;
