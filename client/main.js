@@ -48,12 +48,12 @@ Template.list.onRendered(function () {
 		if(dragging){
 			
 			alert(count);
-			alert(e.clientX);
+			alert(e.touches[0].clientX);
 			count++;
 
-			toDrag.offset({left:e.clientX, top:e.clientY})
+			toDrag.offset({left:e.touches[0].clientX, top:e.touches[0].clientY})
 
-			Session.set( "currentListPos", { "x": e.clientX, "y": e.clientY} );
+			Session.set( "currentListPos", { "x": e.touches[0].clientX, "y": e.touches[0].clientY} );
 
 		}
 		
