@@ -39,24 +39,24 @@ Template.list.onRendered(function () {
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
 	} 
 	
-	var count = 0;
+//	var count = 0;
 
 	$("body").on("touchmove", function(e) {
 		
 		var touch = e.originalEvent.touches[0];
 		
 		$(".test").html("<p>"+touch.pageX+"</p>");
-		alert(touch);
+//		alert(touch);
     
 		if(dragging){
-			$(".test").html("<p> hi "+touch.clientX+"</p>");
-			alert(count);
-			alert(touch.clientX);
-			count++;
+			$(".test").html("<p> hi "+touch.pageX+"</p>");
+//			alert(count);
+//			alert(touch.clientX);
+//			count++;
 
-			toDrag.offset({left:touch.clientX, top:touch.clientY})
+			toDrag.offset({left:touch.pageX, top:touch.pageY})
 
-			Session.set( "currentListPos", { "x": touch.clientX, "y": touch.clientY} );
+			Session.set( "currentListPos", { "x": touch.pageX, "y": touch.pageY} );
 
 		}
 		
