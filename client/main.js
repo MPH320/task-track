@@ -43,9 +43,9 @@ Template.list.onRendered(function () {
 
 	$("body").on("touchmove", function(e) {
 		
-		var touch = e.touches[0].screenX;
+		var touch = e.touches[0];
 		
-		$(".test").html("<p>"+touch.clientX+"</p>");
+		$(".test").html("<p>"+e.touches[0].screenX+"</p>");
     
 		if(dragging){
 			$(".test").html("<p> hi "+touch.clientX+"</p>");
