@@ -38,8 +38,14 @@ Template.list.onRendered(function () {
 		pos = posId.pos;
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
 	} 
+	
+	var count = 0;
 
 	$("body").on("touchmove", function(e) {
+		
+		alert(count)
+		
+		count++;
     
 		if(dragging){
 
