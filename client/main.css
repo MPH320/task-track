@@ -11,7 +11,7 @@
 	position:absolute;
 	width: 50vw;
 	min-width:300px;
-	line-height: 320%;
+	
 }
 
 .checked {
@@ -44,4 +44,14 @@ input {
 
 .task {
 	font-size: 1.25em;
+}
+
+.task-text{
+	height: 50px;
+}
+
+input[type="radio"]
+{
+	position: relative;
+	top: 10px;
 }
