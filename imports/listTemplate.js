@@ -224,8 +224,10 @@ Template.list.events({
     });
 
 		
+		var now = moment().format('YYYY-MM-DDTHH:mm');
+		
 		target.name.value = '';
-		target.due.value = '';
+		target.due.value = now;
 		target.notes.value = '';
 		target.priority.value = '';
 		
