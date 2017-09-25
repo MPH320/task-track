@@ -11,7 +11,9 @@ Template.list.helpers({
 		
 		//console.log(this._id)
 		
-		return Tasks.find({ list: this._id }, { sort: { priority: -1 } })
+		//return Tasks.find({ list: this._id }, { sort: { priority: -1 } })
+		
+		return Tasks.find({list: this._id}, { sort: [['completed', 'asc'], ['priority', 'desc']] });
 
 		
     //return Lists.findOne(this._id)["tasks"];

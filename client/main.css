@@ -22,3 +22,26 @@
 input {
  height: 30px;
  }
+
+.glyphicon-move {
+	font-size: 2em;
+}
+
+.list-title{
+	position: relative;
+	bottom: 5px;
+	font-size: 1.5em;
+}
+
+.task-check{
+	position: relative;
+	top: 10px;
+}
+
+.new-task{
+	margin-left:40px;
+}
+
+.task {
+	font-size: 1.25em;
+}

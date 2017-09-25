@@ -38,7 +38,7 @@
 		
 		<div class="single-list clearfix"><span class="glyphicon glyphicon-move draggable"></span>
 			<div class="expand-list btn btn-default btn-sm pull-right"><span class="caret"></span></div>
-			{{name}}
+			<span class="list-title">{{name}}</span>
 			
 			{{#if isExpanded}}
 			<br>
@@ -102,10 +102,13 @@
 
 <template name="task">
 
-	<div class="{{#if isCompleted}}checked{{/if}}">
-		<input type="checkbox"  checked="{{checked}}" class="toggle-checked" /> {{name}}<br> 
+	<div class="task {{#if isCompleted}}checked{{/if}}">
+		<input type="checkbox"  checked="{{checked}}" class="toggle-checked task-check" /> 
+		
+		{{name}}<br> 
 		{{dueOn}} <br> 
 		{{notes}}  <div class="delete btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></div>
+		
 	</div>
 	
 	
