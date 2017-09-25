@@ -41,6 +41,22 @@ Template.list.helpers({
 		}
 	
 	},
+	getDate(){
+//		var d = new Date();
+//		d = d.toJSON().slice(0,19)
+		
+//		console.log("yo");
+//		$('input[type=datetime-local]').val(new Date().toJSON().slice(0,19));
+//		return d.toISOString();
+		
+//	$( "input[name='due']" ).val(d.toISOString());
+		var now = moment().format('YYYY-MM-DDTHH:mm');
+		return now;
+		
+//		return "2013-03-18T13:00";
+		
+//		$( "input[name='due']" ).val(d.toLocaleString());
+	},
 });
 
 

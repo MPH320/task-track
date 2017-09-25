@@ -9,6 +9,15 @@ var currentIndex = 0;
 
 Template.list.onRendered(function () {
 	
+	
+//		var d = new Date();
+//		
+//		console.log("yo");
+//		
+//	$( "input[name='due']" ).val(d.toISOString());
+	
+//console.log("yo");
+	
 	var toDrag;
 	
 	dragging = false;
