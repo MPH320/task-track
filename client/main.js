@@ -9,15 +9,6 @@ var currentIndex = 0;
 
 Template.list.onRendered(function () {
 	
-	
-//		var d = new Date();
-//		
-//		console.log("yo");
-//		
-//	$( "input[name='due']" ).val(d.toISOString());
-	
-//console.log("yo");
-	
 	var toDrag;
 	
 	dragging = false;
@@ -41,8 +32,8 @@ Template.list.onRendered(function () {
 	if(posId){
 		
 		pos = posId.pos;
-		console.log(pos.x);
-		console.log(pos.y);
+//		console.log(pos.x);
+//		console.log(pos.y);
 		moveDiv.offset({left:pos["x"], top:pos["y"]})
 	}
 	
@@ -51,15 +42,8 @@ Template.list.onRendered(function () {
 	$("body").on("touchmove", function(e) {
 		
 		var touch = e.originalEvent.touches[0];
-		
-//		$(".test").html("<p>"+touch.pageX+"</p>");
-//		alert(touch);
     
 		if(dragging){
-//			$(".test").html("<p> hi "+touch.pageX+"</p>");
-//			alert(count);
-//			alert(touch.clientX);
-//			count++;
 
 			toDrag.offset({left:touch.pageX, top:touch.pageY})
 
@@ -71,8 +55,6 @@ Template.list.onRendered(function () {
 	
 	
 onmousemove = function(e){
-	
-//	$(".test").html("<p>"+e.clientX+"</p>");
 	
 	if(dragging){
 
@@ -90,7 +72,7 @@ $( "body" ).bind('mouseup touchend', function() {
   if(dragging) {
 		
 		dragging = !dragging;
-		toDrag.css("color", "black");
+//		toDrag.css("color", "black");
 		
 	} 
 });
@@ -99,17 +81,11 @@ $( "body" ).bind('mouseup touchend', function() {
   	$( ".draggable" )
 
   .bind('mousedown touchstart', function() {
-//			console.log("start");
-//			alert("start");
-			//console.log($(this).offset());
-			
-			//$(".draggable").css("color", "gray");
 			
     	if(!dragging) dragging = !dragging;
 			toDrag = $(this).parent()
-		
-//			console.log(toDrag);
-			toDrag.css("color", "gray");
+
+//			toDrag.css("color", "gray");
   });
 	
 	
@@ -194,6 +170,28 @@ Template.task.events({
   'click .delete'() {
     Tasks.remove(this._id);
   },
+	'click .edit'() {
+		Session.set( "editing", this._id );
+  },
+	'click .cancel'(event) {
+		Session.set( "editing", "" );
+  },
+	'submit .edit-task'(event){
+		console.log("Hi");
+		event.preventDefault();
+
+		target = event.target;
+		name = target.name.value;
+		due = target.due.value;
+		priority = target.priority.value;
+		notes = target.notes.value;
+
+		
+		Tasks.update({_id : this._id},{$set:{name : name, notes: notes, priority: priority, due: due}});
+		
+		Session.set( "editing", "" );
+		
+	}
 });
 
 Template.task.helpers({
@@ -203,5 +201,16 @@ Template.task.helpers({
 	dueOn() {
 		var dayWrapper = moment(this.due);
 		return "Due " + dayWrapper.fromNow();
-  }
+  },
+	editing(){
+		if(Session.get("editing") == this._id){
+			return true
+		}
+		return false;
+	},
+	isChecked(theVal){
+		if(theVal == this.priority){
+			return "checked";
+		}
+	},
 });
