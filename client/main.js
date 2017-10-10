@@ -141,20 +141,16 @@ Template.body.events({
     const name = target.name.value;
  		var taskArray = [];
     // Insert a task into the collection
-   	var newId = Lists.insert({
-      name,
-      createdAt: new Date(),
-			expanded: false,
-			tasks: taskArray,
-			owners: ownersArray,
-    });
+   	var newId = Meteor.call('lists.insert', name, new Date(), false, taskArray, ownersArray);
 		
+		console.log(newId);
+
 		if (!Meteor.user()) 
 		{
 			theId = "public";
 		} 
 		
-		Positions.insert({ list: newId, owner: theId, pos: divPos, expanded: false });
+		Meteor.call('positions.insert', newId, theId, divPos, false);
 	
     target.name.value = '';
   },
