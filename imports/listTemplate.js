@@ -100,7 +100,6 @@ Template.list.events({
 		if (posId){
 			Meteor.call('positions.expand', posId._id, ! posId.expanded);
 		} else{
-			//Positions.insert({ list: this._id, owner: theId, expanded: true });
 			Meteor.call('positions.insert', this._id, theId, true);
 		}
 
@@ -148,15 +147,6 @@ Template.list.events({
 		due = target.due.value;
 		priority = target.priority.value;
 		notes = target.notes.value;
-
-//		Tasks.insert({
-//      name,
-//      due: due,
-//			priority: priority,
-//			notes: notes,
-//			completed: false,
-//			list: this._id,
-//    });
 		
 		Meteor.call('tasks.insert', name, due, priority, notes, false, this._id);
 
@@ -166,7 +156,6 @@ Template.list.events({
 		target.due.value = now;
 		target.notes.value = '';
 		target.priority.value = '';
-		
 
   },
 	'submit .new-member'(event) {

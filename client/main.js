@@ -142,8 +142,6 @@ Template.body.events({
  		var taskArray = [];
     // Insert a task into the collection
    	var newId = Meteor.call('lists.insert', name, new Date(), false, taskArray, ownersArray);
-		
-		console.log(newId);
 
 		if (!Meteor.user()) 
 		{
@@ -171,7 +169,7 @@ Template.task.events({
 		Session.set( "editing", "" );
   },
 	'submit .edit-task'(event){
-		console.log("Hi");
+		
 		event.preventDefault();
 
 		target = event.target;
@@ -203,8 +201,6 @@ Template.task.helpers({
 	},
 	isChecked(theVal){
 		if(theVal == this.priority){
-			console.log("priority");
-			console.log (this.priority);
 			return "checked";
 		}
 	},
