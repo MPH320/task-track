@@ -4,13 +4,10 @@ import { Tasks } from '../imports/collections.js';
 import { Positions } from '../imports/collections.js';
 import { Session } from 'meteor/session'
 
+
 Template.list.helpers({
 	tasks() {
-		
-		//return Tasks.find({ list: this._id }, { sort: { priority: -1 } })
-		
 		return Tasks.find({list: this._id}, { sort: [['completed', 'asc'], ['priority', 'desc']] });
-
   },
 	addMember() {
 		
@@ -20,16 +17,9 @@ Template.list.helpers({
 		
   },
 	isExpanded(){
-		
-		if (!Meteor.user()) 
-		{
-			posId = Positions.findOne({list: this._id, owner: "public" });
-		} else{
-			posId = Positions.findOne({list: this._id, owner: Meteor.userId() });
-		}
-		
-		if (posId){
 
+		posId = Positions.findOne({list: this._id});
+		if (posId){
 			return posId.expanded;
 		}
 	
@@ -38,8 +28,7 @@ Template.list.helpers({
 		
 		var now = moment().format('YYYY-MM-DDTHH:mm');
 		return now;
-		
-//		return "2013-03-18T13:00";
+//	return "2013-03-18T13:00";
 		
 	},
 });
@@ -88,12 +77,14 @@ Template.list.events({
 
 		var theId;
 		
+		posId = Positions.findOne({list: this._id});
+		
 		if (!Meteor.user()) 
 		{
-			posId = Positions.findOne({list: this._id, owner: "public" });
+			
 			theId = "public";
 		} else{
-			posId = Positions.findOne({list: this._id, owner: Meteor.userId() });
+		
 			theId = Meteor.userId();
 		}
 		
@@ -148,7 +139,7 @@ Template.list.events({
 		priority = target.priority.value;
 		notes = target.notes.value;
 		
-		Meteor.call('tasks.insert', name, due, priority, notes, false, this._id);
+		Meteor.call('tasks.insert', name, due, priority, notes, false, this._id, this.owners);
 
 		var now = moment().format('YYYY-MM-DDTHH:mm');
 		
@@ -164,6 +155,7 @@ Template.list.events({
 		name = target.name.value;
 
 		Meteor.call('lists.member', this._id, name);
+		Meteor.call('tasks.member', this._id, name);
 		
 		Session.set( "addingMember", false );
   },

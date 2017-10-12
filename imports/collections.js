@@ -8,6 +8,47 @@ export const Tasks = new Mongo.Collection('tasks');
 
 export const Positions = new Mongo.Collection('positions');
 
+if (Meteor.isServer) {
+  // This code only runs on the server
+
+	Meteor.publish('lists', function(){
+		
+		if (Meteor.user()) 
+		{
+			
+			if(Meteor.user().profile){
+				return Lists.find( { owners: Meteor.user().profile.name } );
+			} else {
+				return Lists.find( { owners: Meteor.user().username } );
+			}
+		} else { return Lists.find( { owners: "public" } ) }
+		
+	});
+	
+	Meteor.publish('tasks', function(){
+		
+    if (Meteor.user()) 
+		{
+			if(Meteor.user().profile){
+				return Tasks.find( { owners: Meteor.user().profile.name } );
+			} else {
+				return Tasks.find( { owners: Meteor.user().username } );
+			}
+		} else { return Tasks.find( { owners: "public" } ) }
+	});
+	
+	Meteor.publish('positions', function(){
+			if (!Meteor.user()) 
+		{
+			return Positions.find({owner: "public" });
+		} else{
+			return Positions.find({ owner: Meteor.userId() });
+		}
+	});
+
+
+}
+
 Meteor.methods({
   'lists.insert'(name, date, exp, taskArray, ownersArray) {
 		
@@ -21,7 +62,7 @@ Meteor.methods({
  
    
   },
-		'tasks.insert'(name, due, priority, notes, completed, id) {
+		'tasks.insert'(name, due, priority, notes, completed, id, owners) {
 		
 		Tasks.insert({
       name,
@@ -30,6 +71,7 @@ Meteor.methods({
 			notes: notes,
 			completed: completed,
 			list: id,
+			owners: owners
     });
 		
   },
@@ -65,6 +107,10 @@ Meteor.methods({
 	'lists.member'(theId, owner) {
 		check(theId, String);
 		Lists.update({ _id: theId },{ $push: { owners: owner }})
+  },
+	'tasks.member'(theId, owner) {
+		check(theId, String);
+		Tasks.update({ list: theId },{ $push: { owners: owner }}, {multi:true})
   },
 	'positions.remove'(theId) {
 		check(theId, String);

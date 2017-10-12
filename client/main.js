@@ -5,7 +5,14 @@ import '../imports/listTemplate.js';
 
 var currentIndex = 0;
 
+Template.body.onCreated(function bodyOnCreated() {
 
+	Meteor.subscribe("lists");
+	Meteor.subscribe('positions');
+	Meteor.subscribe('tasks');
+	
+
+});
 
 Template.list.onRendered(function () {
 	
@@ -18,17 +25,10 @@ Template.list.onRendered(function () {
 	
 	var posId; 
 
-	if (!Meteor.user()) 
-	{
-		posId = Positions.findOne({list: listID, owner: "public" });
-		
-	} else{
-		posId = Positions.findOne({list: listID, owner: Meteor.userId() });
-	}
-	
+	posId = Positions.findOne({list: listID });
+
 	moveDiv = $(moveDiv);
 	
-
 	if(posId){
 		
 		pos = posId.pos;
@@ -99,17 +99,7 @@ Accounts.ui.config({
 
 Template.body.helpers({
 	lists() {
-   
-		if (Meteor.user()) 
-		{
-			
-			if(Meteor.user().profile){
-				return Lists.find( { owners: Meteor.user().profile.name } );
-			} else {
-				return Lists.find( { owners: Meteor.user().username } );
-			}
-		} else { return Lists.find( { owners: "public" } ) }
-
+		return Lists.find() 
 	},
 });
 
