@@ -59,9 +59,9 @@ onmousemove = function(e){
 	if(dragging){
 
 		toDrag.offset({left:e.clientX, top:e.clientY})
-		
+	
 		Session.set( "currentListPos", { "x": e.clientX, "y": e.clientY} );
-			
+	
 	}
 
 }
@@ -158,13 +158,11 @@ Template.body.events({
 
 Template.task.events({
   'click .toggle-checked'() {
-
-    Tasks.update(this._id, {
-      $set: { completed: ! this.completed },
-    });
+	
+		Meteor.call('tasks.updateCompleted', this._id, !this.completed);
   },
   'click .delete'() {
-    Tasks.remove(this._id);
+		Meteor.call('tasks.remove', this._id);
   },
 	'click .edit'() {
 		Session.set( "editing", this._id );
@@ -182,8 +180,7 @@ Template.task.events({
 		priority = target.priority.value;
 		notes = target.notes.value;
 
-		
-		Tasks.update({_id : this._id},{$set:{name : name, notes: notes, priority: priority, due: due}});
+		Meteor.call('tasks.update', this._id, name, notes, priority, due);
 		
 		Session.set( "editing", "" );
 		
@@ -206,6 +203,8 @@ Template.task.helpers({
 	},
 	isChecked(theVal){
 		if(theVal == this.priority){
+			console.log("priority");
+			console.log (this.priority);
 			return "checked";
 		}
 	},

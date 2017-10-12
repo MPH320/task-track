@@ -38,7 +38,7 @@ input {
 	top: 10px;
 }
 
-.new-task{
+.new-task, .new-member{
 	margin-left:40px;
 }
 

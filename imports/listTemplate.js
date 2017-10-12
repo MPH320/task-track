@@ -54,12 +54,14 @@ Template.list.events({
 		if(posToDel){
 			
 			for(var i = 0; i < posToDel.length; i++){
-				Positions.remove(posToDel[i]._id);
+
+				Meteor.call('positions.remove', posToDel[i]._id);
 			}
 			
 		}
 		
-    Lists.remove(this._id);
+
+		Meteor.call('lists.remove', this._id);
 
   },
 	'click .add'(event){
@@ -96,11 +98,10 @@ Template.list.events({
 		}
 		
 		if (posId){
-			Positions.update(posId._id, {
-				$set: { expanded: ! posId.expanded },
-			});
+			Meteor.call('positions.expand', posId._id, ! posId.expanded);
 		} else{
-			Positions.insert({ list: this._id, owner: theId, expanded: true });
+			//Positions.insert({ list: this._id, owner: theId, expanded: true });
+			Meteor.call('positions.insert', this._id, theId, true);
 		}
 
   },
@@ -133,12 +134,9 @@ Template.list.events({
 		}
 		
 		if (posId){
-			Positions.update(posId._id, {
-      	$set: { pos: pos },
-    	});
-			
+			Meteor.call('positions.update', posId._id, pos);
 		} else{
-			Positions.insert({ list: this._id, owner: theId, pos: pos });
+			Meteor.call('positions.updatePos', this._id, theId, pos);
 		}
 
   },
@@ -151,14 +149,16 @@ Template.list.events({
 		priority = target.priority.value;
 		notes = target.notes.value;
 
-		Tasks.insert({
-      name,
-      due: due,
-			priority: priority,
-			notes: notes,
-			completed: false,
-			list: this._id,
-    });
+//		Tasks.insert({
+//      name,
+//      due: due,
+//			priority: priority,
+//			notes: notes,
+//			completed: false,
+//			list: this._id,
+//    });
+		
+		Meteor.call('tasks.insert', name, due, priority, notes, false, this._id);
 
 		var now = moment().format('YYYY-MM-DDTHH:mm');
 		
@@ -174,7 +174,7 @@ Template.list.events({
 		target = event.target;
 		name = target.name.value;
 
-		Lists.update({ _id: this._id },{ $push: { owners: name }})
+		Meteor.call('lists.member', this._id, name);
 		
 		Session.set( "addingMember", false );
   },
