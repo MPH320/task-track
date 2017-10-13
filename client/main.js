@@ -166,7 +166,7 @@ Template.task.events({
 		name = target.name.value;
 		due = target.due.value;
 		priority = target.priority.value;
-		notes = target.notes.value;
+		notes = $(target).parent().find('.notesDiv').html();
 
 		Meteor.call('tasks.update', this._id, name, notes, priority, due);
 		

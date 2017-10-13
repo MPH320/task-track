@@ -137,7 +137,8 @@ Template.list.events({
 		name = target.name.value;
 		due = target.due.value;
 		priority = target.priority.value;
-		notes = target.notes.value;
+		//notes = target.notes.value;
+		notes = $(target).parent().find('.notesDiv').html();
 		
 		Meteor.call('tasks.insert', name, due, priority, notes, false, this._id, this.owners);
 
@@ -145,8 +146,11 @@ Template.list.events({
 		
 		target.name.value = '';
 		target.due.value = now;
-		target.notes.value = '';
+		//target.notes.value = '';
 		target.priority.value = '';
+		$(target).parent().find('.notesDiv').html('Task notes:');
+		
+		//console.log($(target).parent().find('.editDiv').html());
 
   },
 	'submit .new-member'(event) {

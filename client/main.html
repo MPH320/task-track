@@ -46,12 +46,14 @@
 			<form class="new-task">
 				
 				&nbsp;Name:
-				<input type="text" name="name"/> <br><br>
+				<input type="text" name="name" class="taskName"/> <br><br>
 				
-				&nbsp;Notes: <input type="text" name="notes" /><br><br>
+				<div class="notesDiv" contentEditable="true">Enter notes here</div><br><br>
 				
 				&nbsp;Due:
-  			&thinsp;&thinsp;&thinsp;&thinsp;<input type="datetime-local" name="due" value="{{getDate}}"><br>
+  			&thinsp;&thinsp;&thinsp;&thinsp;<input class="taskName" type="datetime-local" name="due" value="{{getDate}}"><br>
+				
+		
 				
 				&nbsp;Priority:
 				<input type="radio" name="priority" value="1">Low
@@ -66,7 +68,7 @@
 				</button>
 				
 				<input class="btn btn-default btn-sm" type="reset">
-   		</form><br>
+   		</form>
 			
 			 <ul>
 				
@@ -107,12 +109,12 @@
 				
 				<br>
 				&nbsp;Name:
-				<input type="text" name="name" value="{{name}}"/> <br><br>
-				
-				&nbsp;Notes: <input type="text" name="notes" value="{{notes}}"/><br><br>
+				<input type="text" name="name" value="{{name}}" class="taskName"/> <br><br>
+		
+				<div class="notesDiv" contentEditable="true">Enter notes here</div><br><br>
 				
 				&nbsp;Due:
-  			&thinsp;&thinsp;&thinsp;&thinsp;<input type="datetime-local" name="due" value="{{due}}"><br>
+  			&thinsp;&thinsp;&thinsp;&thinsp;<input class="taskName" type="datetime-local" name="due" value="{{due}}"><br>
 				
 				&nbsp;Priority:
 				<input type="radio" name="priority" value="1" {{isChecked 1}}>Low
@@ -139,14 +141,16 @@
 		<input type="checkbox"  checked="{{isCompleted}}" class="toggle-checked task-check" /> 
 		
 		{{name}}<br> 
-		{{dueOn}} <br> 
-		{{notes}}  
+		{{notes}}<br> 
+		{{dueOn}}  
+		 
 		
 	</div>
 	
-		<div class="edit btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></div>
-		<div class="delete btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></div>
-		
+		<div class="editButtons">
+			<div class="edit btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></div>
+			<div class="delete btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></div>
+		</div>
 	
 	
 	

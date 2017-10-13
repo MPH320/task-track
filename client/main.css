@@ -18,6 +18,9 @@
   color: #888;
 	text-decoration: line-through;
 }
+.taskName{
+	width:90%;
+}
 
 input {
  height: 30px;
@@ -46,6 +49,10 @@ input {
 	font-size: 1.25em;
 }
 
+.editButtons{
+	margin-top: 10px;
+}
+
 .task-text{
 	height: 50px;
 }
@@ -54,4 +61,11 @@ input[type="radio"]
 {
 	position: relative;
 	top: 10px;
+}
+
+.notesDiv{
+  width:90%;
+  min-height:50px;
+  border:.1px solid #A9A9A9;
+	margin-bottom: -20px;
 }
